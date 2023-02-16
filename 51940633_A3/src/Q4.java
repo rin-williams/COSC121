@@ -8,7 +8,7 @@ public class Q4 {
         File src = new File("src/source.txt");
         Scanner in = new Scanner(src);
 
-        File des = new File("src/destination2.txt");
+        File des = new File("src/destination.txt");
         FileWriter file = new FileWriter(des);
 
         while (in.hasNextLine()) {
