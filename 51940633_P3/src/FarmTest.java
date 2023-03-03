@@ -1,8 +1,8 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class FarmTest {
 	public static void main(String[] args)
-			throws CloneNotSupportedException, FileNotFoundException, ClassNotFoundException {
+			throws CloneNotSupportedException, ClassNotFoundException, IOException {
 		Farm myFarm = new Farm("stat.dat");
 		myFarm.printSummary();
 		for (Animal a : myFarm.getAnimals())
