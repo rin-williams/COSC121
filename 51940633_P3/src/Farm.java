@@ -1,4 +1,3 @@
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +17,7 @@ public class Farm {
 	// animalsCount is used to track the number of animals in the animals array.
 	// animalsCount should be incremented whenever we add a new animal to animals
 	// array.
-	public Farm(String filename) {
+	public Farm(String filename) throws ClassNotFoundException, IOException {
 		animals = new Animal[MAX_ANIMAL_COUNT];
 		load(filename);
 	}
@@ -133,25 +132,15 @@ public class Farm {
 			return animals;
 	}
 
-	public void exit(String filename) throws FileNotFoundException {
+	public void exit(String filename) throws IOException {
 		File file = new File(filename);
-		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
-			out.writeUTF("availableFood: " + availableFood);
-
-			for (Animal a : getAnimals()) {
-				// store all animals with its corresponding using UTF and Object writing.
-				if (a instanceof Llama) {
-					out.writeUTF("Llama: ");
-					out.writeObject((Animal) a);
-				} else if (a instanceof Chicken) {
-					out.writeUTF("Chicken: ");
-					out.writeObject((Animal) a);
-				} else {
-					out.writeUTF("Cow: ");
-					out.writeObject((Animal) a);
-				}
-			}
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))){
+			
+			out.writeDouble(getAvailableFood());
+			out.writeInt(animalsCount);
+			out.writeObject(this.animals);
 			out.close();
+
 			System.out.println("----------" + "\nFile saved.\n");
 
 		} catch (FileNotFoundException e) {
@@ -163,27 +152,17 @@ public class Farm {
 		}
 	}
 
-	public void load(String filename) {
+	public void load(String filename) throws IOException, ClassNotFoundException {
 		File file = new File(filename);
-		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-			// since we stored available food first, we can read it using readUTF.
-			setAvailableFood(Double.parseDouble(in.readUTF().split(" ")[1]));
-			try {
-				while (in.available() > 0) {
-					String data = in.readUTF();
-					if (data.equals("Cow: ")) {
-						add((Cow) in.readObject());
-					} else if (data.equals("Llama: ")) {
-						add((Llama) in.readObject());
-					} else {
-						add((Chicken) in.readObject());
-					}
-				}
-				System.out.println("\nFile loaded from " + filename + "\n----------");
-			} catch (EOFException e) {
-				System.out.println("Error: end of file.");
-			}
 
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))){
+
+			setAvailableFood(in.readDouble());
+			animalsCount = in.readInt();
+			animals = (Animal[]) in.readObject();
+			in.close();
+
+			System.out.println("\nFile loaded from " + filename + "\n----------");
 		} catch (FileNotFoundException e) {
 			System.out.println("\nFile not found! Making a default farm." + "\n----------");
 
@@ -194,12 +173,10 @@ public class Farm {
 			add(new Llama());
 			add(new Llama());
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("Cannot find class! aborted.\n");
 		} catch (IOException e) {
 			System.out.println("Unknown error while importing ! aborted.\n");
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
