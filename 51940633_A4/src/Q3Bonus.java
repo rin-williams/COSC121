@@ -1,10 +1,12 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-public class Q3 {
+public class Q3Bonus {
     public static void main(String[] args) throws IOException {
         long start = System.currentTimeMillis();
         long end;
@@ -50,12 +52,12 @@ class BackupRestore {
                         + " megabytes. This file will be split into " + (int) numOfParts + " parts");
 
                 // splitting files
-                FileInputStream in = new FileInputStream(filename);
+                BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
                 for (int i = 0; i < numOfParts; i++) {
 
                     File fileOutput = new File(filename + "." + i);
 
-                    FileOutputStream out = new FileOutputStream(fileOutput);
+                    BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fileOutput));
 
                     for (int j = 0; j < partSizeBytes; j++) {
                         int b;
@@ -84,7 +86,7 @@ class BackupRestore {
         File file = new File(filename);
         File filePiece;
         long sizeInBytes;
-        FileOutputStream out = new FileOutputStream(file);
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
 
         for (int i = 0; i < numberOfPieces; i++) {
             filePiece = new File(filename + "." + i);
@@ -92,7 +94,7 @@ class BackupRestore {
 
             System.out.println("Size of file " + i + ": " + sizeInBytes + " bytes");
 
-            FileInputStream in = new FileInputStream(filePiece);
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(filePiece));
             try {
 
                 for (int j = 0; j < sizeInBytes; j++) {

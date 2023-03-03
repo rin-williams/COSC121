@@ -11,23 +11,17 @@ public class Q2 {
             FileInputStream in = new FileInputStream(
                     "/Users/rin/eclipse-workspace/COSC121/51940633_A4/src/" + filename);
             int count = 0;
-            int countHex = 0;
             while (in.available() > 0) {
                 String hex = Integer.toHexString(in.read()).toUpperCase();
-                if (count < 8) {
-                    if (countHex < 2) {
-                        System.out.print(hex.length() == 1 ? "0" + hex + " " : hex + " ");
-                    } else {
-                        System.out.print("\n" + (hex.length() == 1 ? "0" + hex + " " : hex + " "));
-                        countHex = 0;
-                    }
-                    count++;
+                count++;
+
+                System.out.print((hex.length() == 1 ? "0" + hex : hex));
+                if (count % 16 == 0) {
+                    System.out.print("\n");
+                } else if (count % 8 == 0) {
+                    System.out.print(" | ");
                 } else {
-                    countHex++;
-                    if (countHex < 2) {
-                        System.out.print("| ");
-                    }
-                    count = 0;
+                    System.out.print(" ");
                 }
             }
             in.close();
