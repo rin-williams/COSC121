@@ -1,10 +1,8 @@
-import java.text.DecimalFormat;
-
 public class Q1 {
     public static void main(String[] args) {
-        DecimalFormat df = new DecimalFormat("#.##");
+
         for (int i = 1; i < 6; i++) {
-            System.out.println(df.format(f(i)));
+            System.out.printf("i = %d   f(i) = %.2f\n", i, f(i));
         }
     }
 
