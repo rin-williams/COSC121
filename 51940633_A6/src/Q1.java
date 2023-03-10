@@ -12,7 +12,7 @@ public class Q1 {
             list.add(in.nextInt());
         }
         in.close();
-        System.out.print(noDuplicates(list));
+        System.out.print("Your list without duplicates: " + noDuplicates(list));
     }
 
     public static ArrayList<Integer> noDuplicates(ArrayList<Integer> list) {
