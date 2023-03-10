@@ -27,9 +27,9 @@ public class Q2 {
         // only use this after clean up
         // FileWriter out = new FileWriter(file);
 
-        System.out.println("Before shuffling\n" + arr);
+        System.out.println("\nBefore shuffling (splitted into array)\n" + arr);
         Collections.shuffle(arr);
-        System.out.print("Ater shuffling\n");
+        System.out.print("\nAter shuffling\n");
         for (String s : arr) {
             System.out.print(s + ".");
             out.write(s + ".");
