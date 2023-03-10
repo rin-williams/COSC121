@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Q2 {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         printShuffled("story.txt");
-
     }
 
     public static void printShuffled(String filename) throws FileNotFoundException, IOException {
@@ -25,6 +24,7 @@ public class Q2 {
         in.close();
 
         FileWriter out = new FileWriter("/Users/rin/eclipse-workspace/COSC121/51940633_A6/src/teststory.txt");
+        // only use this after clean up
         // FileWriter out = new FileWriter(file);
 
         System.out.println("Before shuffling\n" + arr);
