@@ -19,7 +19,7 @@ public class Q2 {
         in.useDelimiter("[.:!?]");
 
         while (in.hasNext()) {
-            arr.add(in.next());
+            arr.add(in.next().trim());
         }
         in.close();
 
@@ -31,8 +31,8 @@ public class Q2 {
         Collections.shuffle(arr);
         System.out.print("\nAter shuffling\n");
         for (String s : arr) {
-            System.out.print(s + ".");
-            out.write(s + ".");
+            System.out.print(s + ". ");
+            out.write(s + ". ");
         }
         out.close();
 
