@@ -22,6 +22,8 @@ public class PatientManager {
         Scanner in = new Scanner(System.in);
 
         menu: while (true) {
+
+            // a condition to check and see if the user input is valid or not.
             option1: while (true) {
                 try {
                     System.out.print("* Choose an item from the menu: ");
@@ -36,13 +38,15 @@ public class PatientManager {
                     in.nextLine();
                 }
             }
+
+            // what to do after the user inputs the right number
             switch (userInput) {
                 case 1:
-                    // name
+                    // get name
                     System.out.print("      Enter the patient's name: ");
                     name = in.next();
 
-                    // urgency number
+                    // get urgency number
                     System.out.print("      Enter emergency [1 (low) to 5 (life-and-death)]: ");
                     while (true) {
                         try {
@@ -72,7 +76,6 @@ public class PatientManager {
                         break;
                     }
                 case 3:
-
                     if (waitingList.size() == 0) {
                         System.out.print("      Waiting list is empty, please add patients.\n");
                         break;

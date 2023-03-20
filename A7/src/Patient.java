@@ -11,21 +11,19 @@ public class Patient implements Comparable<Patient> {
 		this.emergency = priority;
 	}
 
+	// compare them base on their emergency first, then we compare them base on
+	// order if the emergency is equal to each other.
 	public int compareTo(Patient other) {
 		if (this.emergency > other.emergency) {
 			return -1;
-		}
-		else if (this.emergency < other.emergency) {
+		} else if (this.emergency < other.emergency) {
 			return 1;
-		}
-		else{
+		} else {
 			if (this.order > other.order) {
 				return 1;
-			}
-			else if (this.order < other.order) {
+			} else if (this.order < other.order) {
 				return -1;
-			}
-			else {
+			} else {
 				return 0;
 			}
 		}
