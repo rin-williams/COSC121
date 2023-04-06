@@ -17,21 +17,26 @@ public class App {
         file.delete();
         file = new File("a.dat.enc");
         file.delete();
+
     }
 
     private static void decrypt(String filename, int decryptKey) throws IOException {
 
-        if (decryptKey != key) {
+        if ((decryptKey != key) || !filename.endsWith(".enc")) {
             throw new IllegalArgumentException("Invalid Key");
-        } else {
-            DataInputStream in = new DataInputStream(new FileInputStream(filename));
-            System.out.println("The file encryped was:");
-            while (in.available() > 0) {
-                System.out.print(in.readByte() + " ");
-                in.readByte();
-            }
-            in.close();
         }
+
+        DataInputStream in = new DataInputStream(new FileInputStream(filename));
+        DataOutputStream out = new DataOutputStream(
+                new FileOutputStream(filename.substring(0, filename.length() - 4) + ".dec"));
+        System.out.println("The file encryped was:");
+        int b;
+        while ((b = in.read()) != -1) {
+            b -= decryptKey;
+            out.write(b);
+        }
+        in.close();
+        out.close();
 
     }
 
@@ -39,23 +44,24 @@ public class App {
 
         if (encryptKey < 0 || encryptKey > 100) {
             throw new IllegalArgumentException("Invalid Key");
-        } else {
-            DataInputStream in = new DataInputStream(new FileInputStream(filename));
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(filename + ".enc"));
-            while (in.available() > 0) {
-                out.writeByte(in.read());
-                out.writeByte(encryptKey);
-            }
-            in.close();
-            out.close();
         }
+        DataInputStream in = new DataInputStream(new FileInputStream(filename));
+        DataOutputStream out = new DataOutputStream(new FileOutputStream(filename + ".enc"));
+        int b;
+        while ((b = in.read()) != -1) {
+            b += encryptKey;
+            out.write(b);
+        }
+        in.close();
+        out.close();
+
     }
 
     public static void writeA() throws IOException {
         DataOutputStream out = new DataOutputStream(new FileOutputStream("a.dat"));
         out.writeInt(5);
         out.write(5);
-        out.writeChar('X');
+        out.writeChar('X'); 
         out.writeUTF("X");
         out.close();
     }
