@@ -13,9 +13,4 @@ public class reverseString {
         // test the method
         System.out.println(reverse("Hello World!"));
     }
-
-    // compile this to a lamnda expression
-    public static boolean isPalindromeLamnda(String input) {
-        return reverse(input).equals(input);
-    }
 }
